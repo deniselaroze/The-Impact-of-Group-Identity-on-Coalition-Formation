@@ -4,10 +4,17 @@
 # Co-authors paper: David Hugh-Jones and Arndt Leininger
 # 27/Feb/2020
 
-setwd("[address your folder]")
 
-bd<-"[address your folder]"
+#setwd("[address your folder]")
 
+#bd<-"[address your folder]"
+
+
+#setwd("C:/Users/dalaro/Dropbox/group ID in legislative bargaining/Data Analysis GRI")
+setwd("C:/Users/Denise Laroze/Dropbox/group ID in legislative bargaining/Data Analysis GRI")
+#Baseline directory for saving plots and tables
+bd<-"C:/Users/Denise Laroze/Dropbox/group ID in legislative bargaining/Social Identity 2019-20/Data analysis/"
+#bd<-"C:/Users/André Laroze/Dropbox/group ID in legislative bargaining/Presentations/"
  
 library("car")
 library("ggplot2")
@@ -245,9 +252,9 @@ mydf<-mydf[order(mydf$session, mydf$period,mydf$group, mydf$group_id),]
 ############# Data Analysis
 ####################################################################### 
 ########################
-mydf<-read.csv("GRI_mydf.csv")  
- 
- 
+
+ mydf<-read.csv("GRI_mydf.csv")  
+
 ####################################
 ##########Subsetting data frames
 #################################### 
@@ -392,9 +399,6 @@ h2 <- hist(treat.r1.df$prop.B, freq=F)
 #k <- kde2d(df$x, df$y, n=25)
 
 
-k <- kde2d(prop.A, prop.B, n=300)
-image(k, col = gray(c(1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0), alpha = NULL),
-      xlab="Pounds offered to A", ylab="Pounds offered to B")
 
 
 
@@ -403,9 +407,9 @@ image(k, col = gray(c(1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0), alpha 
  #### Histograms for variables of interest
   
 #######Gender
- png(filename=paste0(bd, "hist_gender.png", sep=""))
+# png(filename=paste0(bd, "hist_gender.png", sep=""))
  histogram(treat.r1.df$gender, col="gray", xlab ="Gender")
- dev.off()
+# dev.off()
 
  race3<-factor(treat.r1.dfl$race2)
  #Race
@@ -569,12 +573,12 @@ image(k, col = gray(c(1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0), alpha 
  
  
  ### Treatment sessions vs control
- votetable<-with(mydf.r1,table(vote, Treatment = treatment, useNA = "no"))
- votetable<-prop.table(votetable,2)
- print(votetable)
+# votetable<-with(mydf.r1,table(vote, Treatment = treatment, useNA = "no"))
+# votetable<-prop.table(votetable,2)
+# print(votetable)
  #Latex
- votetable<-xtable(votetable)
- print(votetable,floating=FALSE)
+# votetable<-xtable(votetable)
+# print(votetable,floating=FALSE)
  
   
 ####################################################################
@@ -960,24 +964,24 @@ image(k, col = gray(c(1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0), alpha 
  
  #Gender
  gender_GRI<-mydf$gender[mydf$userperiod==0 & mydf$treatment=="GRI"]
- gender_2d<-mydf.2d.$gender[mydf.2d.$period==1 ]
- tot.gender<-c(as.character(gender_GRI), as.character(gender_2d))
- g<-table(tot.gender)
- g
- prop.table(g) # cell percentages
+ #gender_2d<-mydf.2d.$gender[mydf.2d.$period==1 ]
+ #tot.gender<-c(as.character(gender_GRI), as.character(gender_2d))
+ #g<-table(tot.gender)
+ #g
+ #prop.table(g) # cell percentages
  
  #Race
  race_GRI<-mydf$race2[mydf$userperiod==0 & mydf$treatment=="GRI"]
- race_2d<-mydf.2d.$race2[mydf.2d.$period==1 ]
- tot.race<-c(as.character(race_GRI), as.character(race_2d))
- r <-table(tot.race) 
- r
- prop.table(r)
+ #race_2d<-mydf.2d.$race2[mydf.2d.$period==1 ]
+ #tot.race<-c(as.character(race_GRI), as.character(race_2d))
+ #r <-table(tot.race) 
+ #r
+ #prop.table(r)
  
  #Nationalities in Main treatment and 2Dict samples
  nation<-mydf$nationality[mydf$userperiod==0] # Main tratment
- nation.2d<-mydf.2d.$nationality[mydf.2d.$userperiod==1] # 2dictator
- nation<-c(as.character(nation), as.character(nation.2d))
+ #nation.2d<-mydf.2d.$nationality[mydf.2d.$userperiod==1] # 2dictator
+ #nation<-c(as.character(nation), as.character(nation.2d))
  table(nation) # Table with nationalities included in the sample
  
  
@@ -1034,8 +1038,8 @@ image(k, col = gray(c(1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0), alpha 
  ##### Partner and vote models
  
  #### DV: A.M4 placebo Non-Zero offer ==1 Partner Selection 
- p.log.p <- lrm(non.zero ~ ideo.diff+  same.g + same.r + ideo.diff.o+ same.g.o +same.r.o + sp + gender + race2 , data=base.r1.dfl.o, x=T, y=T ) 
- p.log.p.cl <- robcov(p.log.p, base.r1.dfl.o$umg) 
+ #p.log.p <- lrm(non.zero ~ ideo.diff+  same.g + same.r + ideo.diff.o+ same.g.o +same.r.o + sp + gender + race2 , data=base.r1.dfl.o, x=T, y=T ) 
+ #p.log.p.cl <- robcov(p.log.p, base.r1.dfl.o$umg) 
  
  #DV: Vote  - A.M5 placebo Model on acceptance of offers 
  p.log.v1<- lrm(vote ~    prop.ideo.diff + prop.same.gender + prop.same.race  + sp + gender + race2, data=base.r1.df.o, x=T, y=T)
@@ -1050,23 +1054,23 @@ image(k, col = gray(c(1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0), alpha 
  ############### Table Placebo #############
  ########################################### 
  
- screenreg(list(p.lm.M1.cl, p.lm.M2.cl, p.lm.M3.cl, p.log.p.cl, p.log.v1.cl, p.log.v2.cl))
- 
- 
- ### Printing all models as 1 table
- texreg(file= paste0(bd, "placebo_all_models.tex", sep=""), 
-        list(lm.M1.cl, lm.M2.cl, lm.M3.cl, log.p.cl, log.v1.cl, log.v2.cl), 
-        custom.model.names = c("A.M1 Offer placebo", "A.M2 Offer placebo", "A.M3 Offer placebo", "A.M4 Partner placebo", 
-                               "A.M5 Vote placebo", "A.M6 Vote placebo"), 
-        custom.coef.names = c("Intercept", "Ideo. Dist. P-R", "Same Gender", "Same Race", 
-                              "Ideo. Dist. P-3rd", "Same Gender P-3rd", "Same Race P-3rd", 
-                              "Self-Placement", "Proposer-Male", "Proposer-White", 
-                              "Ideo. Dist. P-R", "Same Gender", "Same Race", "Amount Offered" ),
-        caption = "Regression models on amount offered to other participant (Offer), whether a 
-        participant was chosen as coalition partner by giving more than zero (Partner), and whether 
-        a participant chose to accept the offer they received (Vote).",
-        label="table:base_model",
-        booktabs = F, dcolumn = F)
+ # screenreg(list(p.lm.M1.cl, p.lm.M2.cl, p.lm.M3.cl, p.log.p.cl, p.log.v1.cl, p.log.v2.cl))
+ # 
+ # 
+ # ### Printing all models as 1 table
+ # texreg(file= paste0(bd, "placebo_all_models.tex", sep=""), 
+ #        list(lm.M1.cl, lm.M2.cl, lm.M3.cl, log.p.cl, log.v1.cl, log.v2.cl), 
+ #        custom.model.names = c("A.M1 Offer placebo", "A.M2 Offer placebo", "A.M3 Offer placebo", "A.M4 Partner placebo", 
+ #                               "A.M5 Vote placebo", "A.M6 Vote placebo"), 
+ #        custom.coef.names = c("Intercept", "Ideo. Dist. P-R", "Same Gender", "Same Race", 
+ #                              "Ideo. Dist. P-3rd", "Same Gender P-3rd", "Same Race P-3rd", 
+ #                              "Self-Placement", "Proposer-Male", "Proposer-White", 
+ #                              "Ideo. Dist. P-R", "Same Gender", "Same Race", "Amount Offered" ),
+ #        caption = "Regression models on amount offered to other participant (Offer), whether a 
+ #        participant was chosen as coalition partner by giving more than zero (Partner), and whether 
+ #        a participant chose to accept the offer they received (Vote).",
+ #        label="table:base_model",
+ #        booktabs = F, dcolumn = F)
  
  
  
@@ -1577,21 +1581,7 @@ image(k, col = gray(c(1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0), alpha 
  
  
  negbin1 <- glm.nb(prop1.p~ideo.diff +  same.g + same.r + ideo.diff.o + same.g.o + same.r.o + sp + gender + race2, data= treat.r1.dfl.o)
- summary(negbin1) # if the theta is stat sign then the data is overdispersed
- 
- texreg(list(poisson1, negbin1), 
-        custom.model.names = c("Poisson", "Neg Binomial"), 
-        reorder.coef = NULL, ci.level = 0.95)
- 
- texreg(file= paste0(bd, "count.tex", sep=""),
-        list(poisson1, negbin1), 
-        custom.model.names = c("Poisson", "Neg Binomial"), 
-        custom.coef.names = c("Intercept", "Ideo. Dist. P-R", "Same Gender", "Same Race", 
-                              "Ideo. Dist. P-3rd", "Same Gender P-3rd", "Same Race P-3rd", 
-                              "Self-Placement", "Proposer-Male", "Proposer-White"),        
-        reorder.coef = NULL, ci.level = 0.95,
-        caption="Count MLE with hundreds of pence and the dependent variable",
-        label="table:count")
+ negbin1 # if the theta is stat sign then the data is overdispersed
  
  
  
@@ -1704,7 +1694,7 @@ image(k, col = gray(c(1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0), alpha 
  lm.FM1.cl<-robcov(lm.FM1, treat.dfl.o$umg)
  lm.FM1.cl
  
- lm.FM1.r<-ols(prop1~ideo.diff + same.g + same.r + factor(round), data=treat.dfl.o, y=T, x=T)
+ lm.FM1.r<-ols(prop1~ideo.diff + same.g + same.r, data=treat.dfl.o, y=T, x=T)
  lm.FM1.r.cl<-robcov(lm.FM1.r, treat.dfl.o$umg)
  lm.FM1.r.cl
  
@@ -1771,52 +1761,6 @@ image(k, col = gray(c(1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0), alpha 
  log.v5.cl <- robcov(log.v5, treat.df.o$umg)
  log.v5.cl
  
- ###################################################################
- ### Main Models With a dummy for ideologically closest group member
- ###################################################################
- 
- #DV: Offer  - only basic covariates
- lm.M1.d<-ols(prop1~ideo.diff + same.g + same.r + closer.d, data=treat.r1.dfl.o, y=T, x=T)
- lm.M1.d.cl<-robcov(lm.M1.d, treat.r1.dfl.o$umg)
- lm.M1.d.cl
- 
- #DV: Offer  - basic covariates + 3er player controles 
- lm.M2.d<-ols(prop1~ideo.diff + ideo.diff.o + same.g +  same.g.o +same.r+ same.g.o + same.r.o + closer.d, data=treat.r1.dfl.o, y=T, x=T)
- lm.M2.d.cl<-robcov(lm.M2.d, treat.r1.dfl.o$umg)
- lm.M2.d.cl
- 
- 
- #DV: Offer  - basic covariates + 3er player controles + proposer characteristics
- lm.M3.d<-ols(prop1~ideo.diff + same.g+same.r+ ideo.diff.o + same.g.o + same.r.o + sp + gender + race2 + closer.d , data=treat.r1.dfl.o, y=T, x=T)
- lm.M3.d.cl<-robcov(lm.M3.d, treat.r1.dfl.o$umg)
- lm.M3.d.cl
- 
- 
- ##### Partner models
- 
- #### DV:  Non-Zero offer ==1 Partner Selection 
- log.p.d <- lrm(non.zero ~ ideo.diff+  same.g + same.r + ideo.diff.o+ same.g.o +same.r.o + sp + gender + race2 + closer.d , data=treat.r1.dfl.o, x=T, y=T ) 
- log.p.d.cl <- robcov(log.p.d, treat.r1.dfl.o$umg) 
- log.p.d.cl
- 
- 
- 
- screenreg(list(lm.M1.d.cl, lm.M2.d.cl, lm.M3.d.cl, log.p.d.cl))
- 
- 
- ### Printing all models as 1 table
- texreg(file= paste0(bd, "base_models_closer_d.tex", sep=""), 
-        list(lm.M1.cl, lm.M2.cl, lm.M3.cl, log.p.cl), 
-        custom.model.names = c("A.M38 Offer", "A.M39 Offer", "A.M40 Offer", "A.M41 Partner"), 
-        custom.coef.names = c("Intercept", "Ideo. Dist. P-R", "Same Gender", "Same Race", "closer partner - dummy",
-                              "Ideo. Dist. P-3rd", "Same Gender P-3rd", "Same Race P-3rd", 
-                              "Self-Placement", "Proposer-Male", "Proposer-White" 
-        ),
-        caption = "Regression models from table 2 in the main text that include a dummy variable
-        to account for the group member that is closest to the proposer.",
-        label="table:closer_to_d_model",
-        reorder.coef = c(2,3,4,6,7,8,5, 9, 10, 11, 1),
-        booktabs = F, dcolumn = F)
  
  ################################################################################################## 
  ### Correlations and regessions between standard devation of offers and self-placement - Page XXXXX
@@ -1836,5 +1780,4 @@ image(k, col = gray(c(1, 0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0), alpha 
  summary(lm(SD.props~sp, mydf)) #full sample
  summary (lm(SD.props~sp, treat.df)) #Treatment sample
  summary (lm(SD.props~sp, base.df)) # Baseline sample
- summary (lm(SD.props~sp, mydf.2d.)) #2dictator sample
  
