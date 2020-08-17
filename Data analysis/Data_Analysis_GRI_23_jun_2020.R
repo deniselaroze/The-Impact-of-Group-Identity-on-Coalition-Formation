@@ -73,9 +73,9 @@ library(Rmisc)
 mydf<-read.csv("GRI_Dec2014-Feb2015_sessions.csv") 
  
  
-##########################
-###############   Data 
-##########################
+##################################
+###############   Data Management
+#################################
 
 
 # Individual id number 
@@ -233,7 +233,7 @@ rm(tmp)
 #check<-mydf[ c("group_id", "gender", "prop2", "prop3","offer",  "p.offered" ) ]
 #rm(r1)
 
-###########
+
 #Decision in Dictator Game added to all corresponding subj cells (needed for data analysis)
 maxp<-max(mydf$userperiod)
 mydf<- merge(mydf, mydf[mydf$userperiod == maxp, c("uid","pd1", "pd2", "pd3", "generosity")], by.x = "uid", by.y = "uid", suffixes = c("", "all")) 
@@ -247,11 +247,11 @@ mydf<-mydf[order(mydf$session, mydf$period,mydf$group, mydf$group_id),]
  write.csv(mydf,file="GRI_mydf.csv",row.names=F)
  
 
-######################## 
+############################
 ####################################################################### 
 ############# Data Analysis
 ####################################################################### 
-########################
+###########################
 
  mydf<-read.csv("GRI_mydf.csv")  
 
@@ -375,6 +375,11 @@ treat.dfl.o$non.zero<-0
 treat.dfl.o$non.zero[treat.dfl.o$prop1 > 0 ] <- 1
 treat.dfl.o$non.zero[is.na(treat.dfl.o$prop1)] <- NA
 
+base.dfl.o$non.zero<-0
+base.dfl.o$non.zero[base.dfl.o$prop1 > 0 ] <- 1
+base.dfl.o$non.zero[is.na(base.dfl.o$prop1)] <- NA
+
+
 
 ########## Subsets of data for round 1
 treat.r1.df<-subset(treat.df, round==1)
@@ -400,7 +405,9 @@ h2 <- hist(treat.r1.df$prop.B, freq=F)
 
 
 
+##########Unique Observations
 
+table(treat.r1.df$gender)
 
 
  
@@ -534,7 +541,7 @@ h2 <- hist(treat.r1.df$prop.B, freq=F)
 #### Figure 3 - left
 ############## 
  prop.A<-treat.r1.df$prop.A
-  summary(prop.A)
+ summary(prop.A)
  prop.B<-treat.r1.df$prop.B  
  
  #Graph of the offers to other participants
@@ -543,9 +550,9 @@ h2 <- hist(treat.r1.df$prop.B, freq=F)
  require(ggplot2)
  p <- ggplot(treat.r1.df, aes(max_other_prop, min_other_prop)) + scale_fill_gradient(low="grey90", high="black")
  p <- p + stat_bin2d(bins = 20) + xlab("Larger offer") +  ylab("Smaller offer") + xlim(c(0,15)) + ylim(c(0,15)) + theme_bw()
- p <-p + geom_text(aes(3.97, 0.5, label="SPNE"), colour="blue") +  theme(text=element_text(size=24))
+ p <-p + geom_text(aes(3.97, 0.5, label="SSNE"), colour="blue") +  theme(text=element_text(size=24))
  p
- ggsave(filename=paste0(bd, "Figures/offers.png", sep=""),  width=9, height=6)
+ ggsave(filename=paste0(bd, "offers.png", sep=""),  width=9, height=6)
 
  
 ###################### 
@@ -592,10 +599,48 @@ h2 <- hist(treat.r1.df$prop.B, freq=F)
 ########################## 
 #Descriptive statistics
 #########################
- with(treat.r1.dfl, table(go1, g.gender))
  
+ 
+ ##### Information in "Data section"
+ 
+ # Proportion female in main treatment
+ table(mydf$gender[mydf$period==1 & mydf$treatment=="GRI"])
+ 
+ #Proportion of race in main treatment 
+ table(mydf$race2[mydf$period==1 & mydf$treatment=="GRI"])
+ 
+ 
+ #Genders per session
+ sess<-unique(treat.df$session)
+ table(treat.r1.df$gender[treat.r1.df$session==sess[1] & treat.r1.df$period==2])
+ table(treat.r1.df$gender[treat.r1.df$session==sess[2] & treat.r1.df$period==2])
+ table(treat.r1.df$gender[treat.r1.df$session==sess[3] & treat.r1.df$period==2])
+ table(treat.r1.df$gender[treat.r1.df$session==sess[4] & treat.r1.df$period==2])
+ table(treat.r1.df$gender[treat.r1.df$session==sess[5] & treat.r1.df$period==2])
+ table(treat.r1.df$gender[treat.r1.df$session==sess[6] & treat.r1.df$period==2])
+ table(treat.r1.df$gender[treat.r1.df$session==sess[7] & treat.r1.df$period==2])
+ table(treat.r1.df$gender[treat.r1.df$session==sess[8] & treat.r1.df$period==2])
+ table(treat.r1.df$gender[treat.r1.df$session==sess[9] & treat.r1.df$period==2])
+ table(treat.r1.df$gender[treat.r1.df$session==sess[10] & treat.r1.df$period==2])
+ 
+ 
+ #races per session
+ sess<-unique(treat.df$session)
+ table(treat.r1.df$race[treat.r1.df$session==sess[1] & treat.r1.df$period==2])
+ table(treat.r1.df$race[treat.r1.df$session==sess[2] & treat.r1.df$period==2])
+ table(treat.r1.df$race[treat.r1.df$session==sess[3] & treat.r1.df$period==2])
+ table(treat.r1.df$race[treat.r1.df$session==sess[4] & treat.r1.df$period==2])
+ table(treat.r1.df$race[treat.r1.df$session==sess[5] & treat.r1.df$period==2])
+ table(treat.r1.df$race[treat.r1.df$session==sess[6] & treat.r1.df$period==2])
+ table(treat.r1.df$race[treat.r1.df$session==sess[7] & treat.r1.df$period==2])
+ table(treat.r1.df$race[treat.r1.df$session==sess[8] & treat.r1.df$period==2])
+ table(treat.r1.df$race[treat.r1.df$session==sess[9] & treat.r1.df$period==2])
+ table(treat.r1.df$race[treat.r1.df$session==sess[10] & treat.r1.df$period==2])
+ 
+ 
+ #### Others
  cor(treat.r1.df$generosityall, treat.r1.df$sp)
- 
+ with(treat.r1.dfl, table(go1, g.gender))
  cor(as.numeric(treat.r1.df$gender), treat.r1.df$sp)
  cor(as.numeric(treat.r1.df$race), treat.r1.df$sp)
 
@@ -706,6 +751,7 @@ h2 <- hist(treat.r1.df$prop.B, freq=F)
                                "Self-Placement", "Proposer-Male", "Proposer-White",
                                "Amount Offered" ),
          omit.coef = "Intercept",  ci.level = 0.95)
+ 
  
  
  
@@ -952,10 +998,12 @@ h2 <- hist(treat.r1.df$prop.B, freq=F)
  ##### Characteristics of the sample - Table A.2
  ############################################
  
- ### Mean, Min and Max earnings, commented in text
- f.earnings<-mydf$final_earnings[mydf$userperiod==0] ##0 GRI and Baseline
+ ### Mean, Min and Max earnings, in appendix
+ f.earnings<-mydf$final_earnings[mydf$userperiod==0] ##0 Main treatment and Baseline
  summary(f.earnings)
  
+ f.earnings<-treat.df$final_earnings[treat.df$userperiod==0] ##0 Main Treatment
+ summary(f.earnings)
  
  ###Gender and Race Composition of treatment group  - Table A.2
  t.gr <- table(mydf$gender[mydf$userperiod==0 & mydf$treatment=="GRI"], mydf$race[mydf$userperiod==0 & mydf$treatment=="GRI"] ) # A will be rows, B will be columns 
@@ -1011,6 +1059,8 @@ h2 <- hist(treat.r1.df$prop.B, freq=F)
  lm.M2.ps.cl 
  
  screenreg(list(lm.M1.ps.cl, lm.M2.ps.cl))
+ 
+ 
  
  
  #############################################
@@ -1074,6 +1124,39 @@ h2 <- hist(treat.r1.df$prop.B, freq=F)
  #        booktabs = F, dcolumn = F)
  
  
+ 
+ ######################################################
+ ### Gender Comparisons on partner behaviour table A.10
+ ######################################################
+ 
+ 
+ # Partner and vote models
+ 
+ log.p <- lrm(non.zero ~ ideo.diff+  same.g + same.r + sp + gender + race2 , data=treat.r1.dfl.o, x=T, y=T ) 
+ log.p.cl <- robcov(log.p, treat.r1.dfl.o$umg) 
+ log.p.cl
+ 
+ 
+ log.p2 <- lrm(non.zero ~ ideo.diff+  same.g + same.r +  sp + gender + race2 + generosityall , data=treat.r1.dfl.o, x=T, y=T ) 
+ log.p2.cl <- robcov(log.p2, treat.r1.dfl.o$umg) 
+ log.p2.cl
+ 
+ log.p3 <- lrm(non.zero ~ ideo.diff+  same.g + same.r + sp + gender + race2 , data=base.r1.dfl.o, x=T, y=T ) 
+ log.p3.cl <- robcov(log.p3, base.r1.dfl.o$umg) 
+ log.p3.cl
+ 
+ screenreg(list(log.p.cl, log.p2.cl, log.p3.cl),  custom.model.names = c("A.M38 Partner (Treat)", "A.M39 Partner (Treat)", "A.M40 Partner (Baseline)"))
+ 
+### Printing all models as 1 table
+ texreg(file= paste0(bd, "gender_partner.tex", sep=""), 
+        list(log.p.cl, log.p2.cl, log.p3.cl), 
+        custom.model.names = c("A.M38 Partner (Treat)", "A.M39 Partner (Treat)", "A.M40 Partner (Baseline)"), 
+        custom.coef.names = c("intercept", "Ideo. Dist. P-R", "Same Gender", "Same Race", 
+                              "Self-Placement", "Proposer-Male", "Proposer-White", "Offer DG" ),
+        caption = "Logit models on whether a participant was chosen as coalition partner by giving more than zero (Partner), for the treatment sample, the treatment samples,
+        controling for ammount offered in the dictator game and, for the Baseline sample",
+        label="table:gender_partner_model",
+        booktabs = F, dcolumn = F)  
  
  
  
